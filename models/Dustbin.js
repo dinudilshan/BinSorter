@@ -1,8 +1,3 @@
-// String location;
-//     int status;
-//     double latitude;
-//     double longitude;
-
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
