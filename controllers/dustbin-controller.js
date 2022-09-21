@@ -44,11 +44,13 @@ function relativeHaversineDistance(lat1, lon1, lat2, lon2) {
   return asin(ht)
 }
 const getSortedDustbinPath = async (req, res, next) => {
-    const { bin_locations } = req.body;
+    const { bin_locations ,current_location} = req.body;
     let newdustbin;
     try {
     
-      const distanceTo =bin_locations[0];
+      const distanceTo =current_location[0];
+
+      // console.log(distanceTo)
 
       const sorted = bin_locations.sort((a, b) => relativeHaversineDistance(a.latitude, a.longitude, distanceTo.latitude, distanceTo.longitude) - relativeHaversineDistance(b.latitude, b.longitude, distanceTo.latitude, distanceTo.longitude))
       
