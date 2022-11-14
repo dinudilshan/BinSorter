@@ -67,6 +67,31 @@ const getSortedDustbinPath = async (req, res, next) => {
     }
 };
 
+const getreSortedDustbinPath = async (req, res, next) => {
+  const { bin_locations ,current_location} = req.body;
+  let newdustbin;
+  try {
+  
+    const distanceTo = '{"latitude": 6.925980, "longitude": 79.979390}';
+    const disposLoc =current_location[0];
+
+    // console.log(distanceTo)
+
+    const sorted = bin_locations.sort((a, b) => relativeHaversineDistance(a.latitude, a.longitude, distanceTo.latitude, distanceTo.longitude) - relativeHaversineDistance(b.latitude, b.longitude, distanceTo.latitude, distanceTo.longitude))
+    
+    console.log(sorted)
+
+    // res.status(200).json({sorted})
+    res.status(200).json({sorted})
+
+
+  } catch (err) {
+    console.log(err);
+  res.status(201).json({ err });
+
+  }
+};
+
 const getAllBins = async (req, res, next) => {
     let dustbins;
     try {
@@ -80,29 +105,10 @@ const getAllBins = async (req, res, next) => {
     res.status(200).json({ dustbins });
   };
 
- 
-
-// const bin_locations = [
-//   { "id": 279, "latitude": 6.912283, "longitude": 79.853239 },
-//   { "id": 284, "latitude": 6.885697 , "longitude": 79.865699},
-//   { "id": 13, "latitude": 6.912220 , "longitude": 79.851187},
-//   { "id": 282, "latitude": 6.871041, "longitude": 79.858904 },
-//   { "id": 281, "latitude": 6.899757, "longitude": 79.853346 },
-//   { "id": 16, "latitude": 6.894039 , "longitude": 79.854786}
-// ]
-
-// const distanceTo = {
-//   "id": 279,
-//   "longitude": 79.853239,
-//   "latitude": 6.912283
-// }
-
-
-
-
 module.exports = {
 addDustbin: addDustbin,
 getSortedDustbinPath:getSortedDustbinPath,
+getreSortedDustbinPath:getreSortedDustbinPath,
 getAllBins:getAllBins,
 
 };
